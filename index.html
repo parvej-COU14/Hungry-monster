@@ -13,6 +13,7 @@
 </head>
 <body>
     <!-- Navbar -->
+  
     <nav class="navbar navbar-expand-lg navbar-light bg-light  ">
         <div class="container-fluid">
           <a class="navbar-brand mx-5" href="#">HUNGRY <span class="text-primary">MONSTER</span></a>
@@ -38,7 +39,7 @@
         </div>
       </nav>
      
-       <div class="hide-all" id="hide-full">
+     
           <!--Search-btn  -->
         <div class="py-3">
           <div class="fontuser w-50 mx-auto py-3">
@@ -46,17 +47,39 @@
                       placeholder="Search For Meal..."
                       name="uname" required> 
               <i class="fas fa-search fa-lg "></i>
-              <button onclick="getMealList()"class="Search-btn btn" id="search-btn">Search</button>
-              
+              <button class="Search-btn btn" id="search-btn">Search</button>
+              </div>
+         </div>
+         <!--Find Meal -->
+         <div  class = "meal-result">
+          <!-- <h2 class = "title">Your Search Results:</h2> -->
+          <div id= "meal">
+            <!-- meal item -->
+            <!-- <div class = "meal-item">
+              <div class = "meal-img">
+                <img src = "food.jpg" alt = "food">
+              </div>
+              <div class = "meal-name">
+                <h3>Potato Chips</h3>
+                <a href = "#" class = "recipe-btn">Get Recipe</a>
+              </div>
+            </div> -->
+            <!-- end of meal item -->
           </div>
-       
-     
-         </div>
-         <!--Main part -->
-         <div class="main" id="main-card">
-  
-         </div>
-       </div>
+        </div>
+        <!--Modal  -->
+        
+        <div id="modal" class = "meal-details-content">
+          <!-- <div class = "recipe-meal-img">
+            <img src = "${meal.strMealThumb}" alt = "">
+        </div>
+        <h2 class = "recipe-title">${meal.strMeal}</h2>
+        <h4> Ingredients</h4>
+        <div class = "recipe-instruct">
+            <h3>Instructions:</h3>
+            <p>${meal.strInstructions}</p>
+        </div> -->
+        </div>
        
        <script src="app.js"></script>
        

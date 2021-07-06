@@ -1,30 +1,75 @@
+const searchBtn = document.getElementById('search-btn');
+const mealList = document.getElementById('meal');
+const mealDetailsContent = document.querySelector('.meal-details-content');
 
-function getMealList(){
-    const searchInputText=document.getElementById("search-input").value;
+ document.getElementById("search-input").addEventListener("keypress", function(event) {
+   if (event.key == 'Enter') {
+          document.getElementById("search-btn").click();
+     }
+    });
     
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputText}`)
-    .then(res=>res.json())
-    .then(data=>{
-        const detailsDiv=document.getElementById("main-card");
-    for (let i= 0; i < data.meals.length; i++) {
-        const detail = data.meals[i];
-       
+       searchBtn.addEventListener('click', function () {
+        const searchInputText=document.getElementById("search-input").value;
+       fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputText}`)
+        .then(res=>res.json())
+        .then(data=>{
+             let html="";
+           if(data.meals){
+            data.meals.forEach(meal => {
+                html +=`
+                <div class = "meal-item" data-id = "${meal.idMeal}">
+                <div class = "meal-img">
+                    <img src = "${meal.strMealThumb}" alt = "food">
+                </div>
+                <div class = "meal-name">
+                    <h3>${meal.strMeal}</h3>
+                    
+                </div>
+            </div>
+                `;
+                
+            });
+            mealList.classList.remove('notFound');
+        } else{
+            html = "Sorry, we didn't find any meal!";
+            mealList.classList.add('notFound');
+        }
+       mealList.innerHTML = html;
+    });
+})
+   
+//  Meal details
 
-        const detailDiv=document.createElement('div');
-        detailDiv.className='detail'
-        const detailInfo=`
-        <img class="img"src="${detail.strMealThumb}"/>
-        <h3 class="name">${detail.strMeal}</h3>`
-        detailDiv.innerHTML=detailInfo;
-      
-        detailsDiv.appendChild(detailDiv);
-        console.log(detailsDiv)
+     const mealFinder=document.getElementById('meal');
+     mealFinder.addEventListener('click',function(e){
+        e.preventDefault();
+         
+            let mealItem = e.target.parentElement.parentElement;
+            fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
+            .then(response => response.json())
+            .then(data => mealRecipeModal(data.meals));
         
-    }
-    })
+     })
+   // create a modal
+   function mealRecipeModal(meal){
+    console.log(meal);
+    meal = meal[0];
+    let html = `
+      <div class = "recipe-meal-img">
+            <img src = "${meal.strMealThumb}" alt = "">
+        </div>
+        <h2 class = "recipe-title">${meal.strMeal}</h2>
+        <h4> Ingredients </h4>
+        <div class = "recipe-instruct">
+           
+            <p>${meal.strInstructions}</p>
+        </div>
+        
+    `;
+    mealDetailsContent.innerHTML = html;
+    mealDetailsContent.parentElement.classList.add('showRecipe');
 }
-
-
+   
    
    
    
